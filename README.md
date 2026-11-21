@@ -88,3 +88,24 @@ El proyecto cuenta con un repositorio de GitHub, documentación inicial de la ar
 - Revisar el estado de las tareas e incidencias.
 - Validar las funcionalidades cuando estén implementadas.
 - Registrar los cambios relevantes en el repositorio.
+---
+
+## Evolución de Arquitectura - Ingeniería de Software II
+
+### 1. Componente Intervenido y Limitación Detectada
+* **Componente:** Módulo de Procesamiento de Ventas y Control de Stock (`src/gestion_ventas_stock.py`).
+* **Limitación:** Lógica de cálculo de impuestos, descuentos y validación de inventario acoplada mediante condicionales rígidos, violando el Principio Abierto/Cerrado (OCP) y dificultando incorporar nuevas modalidades comerciales sin modificar el núcleo del sistema.
+
+### 2. Patrón de Diseño Aplicado
+* **Patrón:** **Strategy** (Patrón de Comportamiento).
+* **Justificación:** Encapsula cada política de cálculo (`VentaDetalle`, `VentaMayorista`, `VentaExenta`) bajo la interfaz común `EstrategiaVenta`, permitiendo que `ProcesadorVenta` intercambie estrategias en tiempo de ejecución sin alterar su estructura interna.
+
+### 3. Evidencias Técnicas y Diagrama UML
+* **Código fuente refactorizado:** [`src/gestion_ventas_stock.py`](src/gestion_ventas_stock.py)
+* **Diagrama UML de clases:** [`docs/diagramas/diagrama_uml_strategy.md`](docs/diagramas/diagrama_uml_strategy.md)
+* **Capturas de ejecución en consola:** Disponibles en [`docs/diagramas/evidencias/`](docs/diagramas/evidencias/)
+
+### 4. Impacto y Beneficios Obtenidos
+* **Mantenibilidad:** Cambios en tasas de ITBIS o descuentos por volumen se aíslan en clases independientes.
+* **Flexibilidad y Reutilización:** Estrategias intercambiables dinámicamente y reutilizables en cotizaciones y facturación.
+* **Evolución futura:** Facilita la implementación de pruebas unitarias aisladas en las siguientes unidades de la asignatura.
